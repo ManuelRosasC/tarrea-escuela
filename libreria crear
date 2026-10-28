@@ -1,0 +1,72 @@
+#ifndef OPERACIONES_H
+#define OPERACIONES_H
+
+// Nota: Las directivas #ifndef y #define siempre van en MAYÚSCULAS.
+// Sirven para que la librería no se duplique ni cause errores al compilar.
+
+// Ejemplo de una constante (no lleva signo de igual '=', se usa un espacio)
+#define PI 3.1416
+
+// Declaración de las funciones (Prototipos)
+int sumar(int a, int b);
+int calcularAreaCuadrado(int lado);
+void mostrarVector(int v[], int tam);
+
+// Ejemplo de crear un printf personalizado:
+// Se usa 'const char*' para poder recibir un texto entre comillas.
+void mostrarPantalla(const char* texto);
+
+#endif // OPERACIONES_H
+#include <stdio.h>
+#include "operaciones.h" // Importamos nuestra propia cabecera personalizada
+
+// Función para sumar dos números
+int sumar(int a, int b) {
+    return a + b;
+}
+
+// Función para calcular el área de un cuadrado
+int calcularAreaCuadrado(int lado) {
+    return lado * lado;
+}
+
+// Función para imprimir un vector en pantalla de forma bonita: [10 20 30]
+void mostrarVector(int v[], int tam) {
+    printf("[ ");
+    for(int i = 0; i < tam; i++) {
+        printf("%d ", v[i]);
+    }
+    printf("]\n");
+}
+
+// Implementación de tu printf personalizado
+void mostrarPantalla(const char* texto) {
+    printf("%s\n", texto);
+}
+#include <stdio.h>
+#include "operaciones.h" // Incluimos nuestra librería personalizada
+
+int main() {
+    // 1. Probando la función sumar
+    int resultadoSuma = sumar(10, 5);
+    printf("La suma es: %d\n", resultadoSuma);
+    
+    // 2. Probando la función del área
+    int area = calcularAreaCuadrado(4);
+    printf("El area del cuadrado es: %d\n", area);
+    
+    // 3. Probando la función para mostrar vectores
+    int misDatos[3] = {10, 20, 30}; // Corregido: faltaban los corchetes [] en la declaración
+    printf("Mostrar vector usando la libreria:\n");
+    mostrarVector(misDatos, 3);
+    
+    // 4. Probando tu printf personalizado
+    mostrarPantalla("¡Hola! Este es un texto usando mostrarPantalla.");
+    
+    // 5. Probando el uso de la constante PI que definiste en el .h
+    printf("El valor de la constante PI es: %.4f\n", PI);
+   
+    gcc main.c operaciones.c -o mi_programa
+
+    return 0;
+}

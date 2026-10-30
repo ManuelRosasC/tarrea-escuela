@@ -1,0 +1,82 @@
+#include <stdio.h>
+
+// Variables globales para el tablero
+int tamañoTableroColumnas = 7;
+int tamañoFilas = 8;
+char tablero[8][7];
+
+// Variable global para controlar el turno (1 o 2)
+int jugador = 1; 
+
+void inicializarTablero(){
+    for(int i = 0; i < tamañoFilas; i++){
+        for (int j = 0; j < tamañoTableroColumnas; j++){
+            tablero[i][j] = ' ';
+        }
+    }
+}
+
+void mostrarTablero(){
+    for(int i = 0; i < tamañoFilas; i++){
+        for (int j = 0; j < tamañoTableroColumnas; j++){
+            printf("|%c", tablero[i][j]);
+        }
+        printf("|\n");
+    }
+}
+
+void ponerFicha(){
+    int columna;
+
+    if(jugador == 1){
+        printf("Jugador 1, ingresa columna (0-6) para colocar ficha: ");
+        scanf("%d", &columna);
+        
+        // Validar la columna ingresada
+        if (columna < 0 || columna >= tamañoTableroColumnas){
+            printf("Columna invalida, intente de nuevo.\n");
+            return;
+        }
+        
+        // Coloca la ficha en la primera fila disponible
+        for (int i = tamañoFilas - 1; i >= 0; i--){
+            if (tablero[i][columna] == ' '){
+                tablero[i][columna] = 'x';
+                jugador = 2; // Cambia el turno al jugador 2 solo si la jugada fue válida
+                break;
+            }
+        }
+    } 
+    else if(jugador == 2){
+        printf("Jugador 2, ingresa columna (0-6) para colocar ficha: ");
+        scanf("%d", &columna);
+        
+        // Validar la columna ingresada
+        if (columna < 0 || columna >= tamañoTableroColumnas){
+            printf("Columna invalida, intente de nuevo.\n");
+            return;
+        }
+        
+        // Coloca la ficha en la primera fila disponible
+        for (int i = tamañoFilas - 1; i >= 0; i--){
+            if (tablero[i][columna] == ' '){
+                tablero[i][columna] = 'o';
+                jugador = 1; // Cambia el turno al jugador 1 solo si la jugada fue válida
+                break;
+            }
+        }
+    }
+}
+
+int main(){
+    inicializarTablero();
+    mostrarTablero();
+    
+    // Bucle para simular turnos seguidos (puedes detenerlo con Ctrl+C en consola)
+    while(1){
+        ponerFicha();
+        mostrarTablero();
+    }
+
+    return 0;
+}
